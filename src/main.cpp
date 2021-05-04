@@ -270,7 +270,7 @@ SnoreToastActions::Actions parse(std::vector<wchar_t *> args)
             help(L"Close only works if an -id id was provided.");
         }
     } else {
-        hr = (title.length() > 0 && body.length() > 0) ? S_OK : E_FAIL;
+        hr = (title.length() > 0 || body.length() > 0) ? S_OK : E_FAIL;
         if (SUCCEEDED(hr)) {
             if (isTextBoxEnabled) {
                 if (pipe.empty()) {
@@ -279,9 +279,6 @@ SnoreToastActions::Actions parse(std::vector<wchar_t *> args)
                                << std::endl;
                     return SnoreToastActions::Actions::Error;
                 }
-            }
-            if (image.empty()) {
-                image = getIcon();
             }
             SnoreToasts app(appID);
             app.setPipeName(pipe);
